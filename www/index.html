@@ -6,19 +6,54 @@
     <link rel="stylesheet" href="lib/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/plugins.js"></script>
     <title>Plugins</title>
 </head>
 <body>
-     <div class="container">
-        <h2>Plugins</h2>
-        <form>
-            <button id="btn" name="notificacao">Notificação</button>
-            <button id="btn" name="email">Beep</button>
-            <button id="btn" name="telefone">Vibrar</button>
 
+<div class="container">
+    <h2>Plugins</h2>
+    <button id="btnnoti" class="btn" name="notificacao">Notificação</button>
+    <button id="btnbarulho" class="btn" name="barulho">Barulho</button>
+    <button id="btnvibrar" class="btn" name="tvibrar">Vibrar</button>
+</div>
 
+<script src="cordova.js"></script> 
+<script>
+    document.getElementById("btnbarulho").addEventListener("click", function() {
+        navigator.notification.beep(5); 
+    });
 
-        </form>
-    </div>
+    document.getElementById("btnvibrar").addEventListener("click", function() {
+        navigator.vibrate(3000);
+    });
+
+    $(document).ready(function() {
+        $("#btnnoti").click(function() {
+            enviarNotificacao();
+        });
+
+        $("#btnbarulho").click(function() { 
+            reproduzirSom();
+        });
+    });
+
+    function enviarNotificacao() {
+        if (cordova && cordova.plugins && cordova.plugins.notification) {
+            cordova.plugins.notification.local.schedule({
+                title: "Minha Notificação",
+                text: "Olá! Esta é uma notificação de exemplo.",
+                foreground: true 
+            });
+        } else {
+            alert("O plugin de notificação não está disponível.");
+        }
+    }
+
+    function reproduzirSom() {
+        var media = new Media("livechat-129007.mp3");
+        media.play();
+    }
+</script>
 </body>
 </html>

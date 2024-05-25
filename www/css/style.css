@@ -26,11 +26,11 @@ form {
     flex-direction: column;
 }
 
-#btn:hover {
+.btn:hover {
     background-color: #9d1e40;
 }
 
-#btn {
+.btn {
   width: 100%;
   padding: 10px;
   height: 50px;
